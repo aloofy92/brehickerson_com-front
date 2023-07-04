@@ -28,11 +28,12 @@ export const fetchLandlords = createAsyncThunk('users/fetchLandlords', async () 
 });
 
 export const saveReview = createAsyncThunk('users/saveReview', async (reviewData) => {
-  // You can save the review to the server/database here if needed
-  // You can also handle any asynchronous operations related to saving the review
-
-  // Return the review data as the result
-  return reviewData;
+  try {
+    const response = await Axios.post('/reviews', reviewData); // Adjust the API endpoint as per your backend
+    return response.data;
+  } catch (error) {
+    throw new Error('Error saving review');
+  }
 });
 
 const initialState = {
@@ -59,18 +60,7 @@ const usersSlice = createSlice({
     resetStatus: (state) => {
       state.status = null;
     },
-    resetUser: (state) => {
-      return {
-        email: '',
-        password: '',
-        firstname: '',
-        lastname: '',
-        message: 'User Logged Out!',
-        status: null,
-        reviews: [],
-        landlords: [],
-      };
-    },
+    resetUser: () => initialState,
     addReview: (state, action) => {
       state.reviews.push(action.payload);
     },
@@ -106,21 +96,25 @@ const usersSlice = createSlice({
         state.message = action.payload;
         state.status = 'rejected';
       })
-      .addCase(fetchLandlords.pending, (state) => {
-        state.status = 'pending';
-      })
       .addCase(fetchLandlords.fulfilled, (state, action) => {
-        state.status = 'fulfilled';
         state.landlords = action.payload;
       })
       .addCase(fetchLandlords.rejected, (state) => {
-        state.status = 'rejected';
+        console.log('!@-------fetchLandlords Error!-------@!');
       })
       .addCase(saveReview.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
+      })
+      .addCase(saveReview.rejected, (state) => {
+        console.log('!@-------saveReview Error!-------@!');
       });
   },
 });
+
+export const { setUser, resetStatus, resetUser, addReview } = usersSlice.actions;
+
+export default usersSlice.reducer;
+
 
 export const { setUser, resetStatus, resetUser, addReview } = usersSlice.actions;
 export default usersSlice.reducer;
