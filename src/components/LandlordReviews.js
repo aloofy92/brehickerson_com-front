@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { saveReview, addReview } from '../redux/usersSlice'; 
+import { saveReview, addReview } from '../redux/usersSlice';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 function LandlordReviews({ landlordId }) {
   const reviews = useSelector((state) => state.users.reviews) || [];
@@ -42,14 +47,23 @@ function LandlordReviews({ landlordId }) {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
       <h1>Reviews/Testimonials</h1>
+      <Card sx={{ minWidth: 100, width: 300 }}>
+        <CardMedia
+          component="img"
+          height="200"
+          image="images/businesswoman-using-laptop-in-kitchen.jpg"
+          alt="Landlord"
+          style={{ width: '100%', objectFit: 'cover' }}
+        />
+      </Card>
 
       {/* Existing Reviews */}
-      <div>
-        <h2>Browse Reviews</h2>
+      <div style={{ width: '300px', marginTop: '20px' }}>
+        <h2 style={{ textAlign: 'center' }}>Browse Reviews</h2>
         {reviews.map((review) => (
-          <div key={review.id}>
+          <div key={review.id} style={{ marginBottom: '10px' }}>
             <h3>Rating: {review.rating}</h3>
             <p>Description: {review.description}</p>
             {/* Render other review details */}
@@ -58,8 +72,8 @@ function LandlordReviews({ landlordId }) {
       </div>
 
       {/* Write a Review */}
-      <div>
-        <h2>Write a Review</h2>
+      <div style={{ width: '300px', marginTop: '20px' }}>
+        <h2 style={{ textAlign: 'center' }}>Write a Review</h2>
         <form onSubmit={handleSubmitReview}>
           <label>
             Name:
@@ -117,8 +131,24 @@ function LandlordReviews({ landlordId }) {
           <button type="submit">Submit Review</button>
         </form>
       </div>
+
+      {/* Submitted Reviews */}
+      <div style={{ width: '300px', marginTop: '20px' }}>
+        <h2 style={{ textAlign: 'center' }}>Submitted Reviews</h2>
+        {reviews.map((review) => (
+          <div key={review.id} style={{ marginBottom: '10px' }}>
+            <h3>Rating: {review.rating}</h3>
+            <p>Description: {review.description}</p>
+            {/* Render other review details */}
+          </div>
+        ))}
+      </div>
     </div>
   );
+}
+
+export default LandlordReviews;
+
 }
 
 export default LandlordReviews;
