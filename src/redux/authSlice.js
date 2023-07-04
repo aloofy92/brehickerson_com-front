@@ -66,3 +66,7 @@ export const authSlice = createSlice({
 export const { authSuccess, authFailure } = authSlice.actions
 
 export default authSlice.reducer
+
+export const { authSuccess, authFailure } = authSlice.actions
+
+export default authSlice.reducer
