@@ -149,6 +149,3 @@ function LandlordReviews({ landlordId }) {
 
 export default LandlordReviews;
 
-}
-
-export default LandlordReviews;
