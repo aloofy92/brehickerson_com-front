@@ -116,6 +116,3 @@ export const { setUser, resetStatus, resetUser, addReview } = usersSlice.actions
 export default usersSlice.reducer;
 
 
-export const { setUser, resetStatus, resetUser, addReview } = usersSlice.actions;
-export default usersSlice.reducer;
-
